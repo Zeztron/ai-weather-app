@@ -81,7 +81,5 @@ interface Root {
 }
 
 interface QueryResult {
-  data: {
-    myQuery: Root;
-  };
+  myQuery: Root;
 }
