@@ -1,6 +1,6 @@
 import { getClient } from '@/apollo-client';
 import fetchWeatherQuery from '@/graphql/queries/fetchWeatherQuery';
-import { CalloutCard } from '@/components';
+import { CalloutCard, StatCard } from '@/components';
 
 type Props = {
   params: {
@@ -36,9 +36,53 @@ const WeatherPage = async ({ params: { city, lat, long } }: Props) => {
               {result.timezone})
             </p>
           </div>
-          <div>
-            <CalloutCard message="This is where GPT summary will go."/>
+          <div className="m-2 mb-10">
+            <CalloutCard message='This is where GPT summary will go.' />
           </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 m-2">
+            <StatCard
+              title='Maximum Tempurature'
+              metric={`${result.daily.temperature_2m_max[0].toFixed(1)}°`}
+              color='yellow'
+            />
+
+            <StatCard
+              title='Minimum Temperature'
+              metric={`${result.daily.temperature_2m_min[0].toFixed(1)}°`}
+              color='green'
+            />
+            <div>
+              <StatCard
+                title='UV Index'
+                metric={result.daily.uv_index_max[0].toFixed(1)}
+                color='rose'
+              />
+              {Number(result.daily.uv_index_max[0].toFixed(1)) > 5 && (
+                <CalloutCard
+                  message='High UV Index. Please wear sunscreen.'
+                  warning
+                />
+              )}
+            </div>
+            <div className='flex space-x-3'>
+              <StatCard
+                title='Wind Speed'
+                metric={`${result.current_weather.windspeed.toFixed(1)}m/s`}
+                color='cyan'
+              />
+              <StatCard
+                title='Wind Direction'
+                metric={`${result.current_weather.winddirection.toFixed(1)}°`}
+                color='violet'
+              />
+            </div>
+          </div>
+        </div>
+        <hr className="mb-5"/>
+        <div className="space-y-3">
+          {/* TempChart */}
+          {/* RainChart */}
+          {/* HumidityChart */}
         </div>
       </div>
     </div>
