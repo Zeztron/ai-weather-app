@@ -1,6 +1,6 @@
 import { getClient } from '@/apollo-client';
 import fetchWeatherQuery from '@/graphql/queries/fetchWeatherQuery';
-import { CalloutCard, StatCard } from '@/components';
+import { CalloutCard, StatCard, InformationPanel } from '@/components';
 
 type Props = {
   params: {
@@ -26,6 +26,7 @@ const WeatherPage = async ({ params: { city, lat, long } }: Props) => {
 
   return (
     <div>
+      <InformationPanel city={city} lat={lat} long={long} result={result}/>
       <div>
         <div className='p-4'>
           <div className='pb-5'>
@@ -36,10 +37,10 @@ const WeatherPage = async ({ params: { city, lat, long } }: Props) => {
               {result.timezone})
             </p>
           </div>
-          <div className="m-2 mb-10">
+          <div className='m-2 mb-10'>
             <CalloutCard message='This is where GPT summary will go.' />
           </div>
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 m-2">
+          <div className='grid grid-cols-1 xl:grid-cols-2 gap-5 m-2'>
             <StatCard
               title='Maximum Tempurature'
               metric={`${result.daily.temperature_2m_max[0].toFixed(1)}°`}
@@ -78,8 +79,8 @@ const WeatherPage = async ({ params: { city, lat, long } }: Props) => {
             </div>
           </div>
         </div>
-        <hr className="mb-5"/>
-        <div className="space-y-3">
+        <hr className='mb-5' />
+        <div className='space-y-3'>
           {/* TempChart */}
           {/* RainChart */}
           {/* HumidityChart */}
