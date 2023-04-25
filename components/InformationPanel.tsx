@@ -1,4 +1,3 @@
-import { MoonIcon, SunIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
 import CityPicker from './CityPicker';
 
@@ -15,6 +14,7 @@ const InformationPanel: React.FC<InformationPanelProps> = ({
   long,
   result,
 }) => {
+  console.log(result)
   return (
     <div className='bg-gradient-to-br from-[#394F68] to-[#183B7E] text-white p-10'>
       <div className='pb-5'>
@@ -39,13 +39,25 @@ const InformationPanel: React.FC<InformationPanelProps> = ({
             Timezone: {Intl.DateTimeFormat().resolvedOptions().timeZone}
           </p>
         </div>
-        <p className="text-xl font-bold uppercase">
+        <p className='text-xl font-bold uppercase'>
           {new Date().toLocaleTimeString('en-US', {
             hour: 'numeric',
             minute: 'numeric',
             hour12: true,
           })}
         </p>
+      </div>
+      <hr className='mt-10 mb-5' />
+      <div>
+        <div>
+          Image
+          <div>
+            <p>{result.current_weather.temperature.toFixed(1)}°C</p>
+            <p>
+              Weathercode
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
