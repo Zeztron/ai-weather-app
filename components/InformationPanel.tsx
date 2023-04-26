@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import CityPicker from './CityPicker';
+import weatherCodeToString, { WeatherCode } from '@/lib/weatherCodeToString';
 
 interface InformationPanelProps {
   city: string;
@@ -14,7 +15,6 @@ const InformationPanel: React.FC<InformationPanelProps> = ({
   long,
   result,
 }) => {
-  console.log(result)
   return (
     <div className='bg-gradient-to-br from-[#394F68] to-[#183B7E] text-white p-10'>
       <div className='pb-5'>
@@ -50,11 +50,28 @@ const InformationPanel: React.FC<InformationPanelProps> = ({
       <hr className='mt-10 mb-5' />
       <div>
         <div>
-          Image
+          <Image
+            src={`https://www.weatherbit.io/static/img/icons/${
+              weatherCodeToString(
+                result.current_weather.weathercode as WeatherCode
+              )?.icon
+            }.png`}
+            alt={
+              weatherCodeToString(
+                result.current_weather.weathercode as WeatherCode
+              )!.label
+            }
+            width={75}
+            height={75}
+          />
           <div>
             <p>{result.current_weather.temperature.toFixed(1)}°C</p>
             <p>
-              Weathercode
+              {
+                weatherCodeToString(
+                  result.current_weather.weathercode as WeatherCode
+                )?.label
+              }
             </p>
           </div>
         </div>
